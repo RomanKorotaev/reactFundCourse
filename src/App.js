@@ -67,6 +67,9 @@ function App() {
 
   return (
     <div className="App">
+      
+      <title>My-app</title>
+      
       <button onClick={fetchPosts}>GET POSTS</button>
      
       <MyButton style = {{marginTop: "50px"}}onClick={ ()=> setModal (true) } >
@@ -85,7 +88,7 @@ function App() {
       />
     {/* В теге img не пишем прямой путь к картинке, а импортируем ее как модуль */}
     <div style={{ display: 'flex', justifyContent: 'end'}}>
-      <img src={starImg} alt=" It's a star! :)" style={{width: '200px'}}/>
+      <img src={starImg} alt=" It's a star! :)" style={{width: '100px'}}/>
 </div>
       {postError && 
           <h1>Произошла ошибка ${postError}</h1>

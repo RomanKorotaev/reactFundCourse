@@ -14,5 +14,8 @@ export const useFetching =(callback)=>{
             setIsLoading(false)
         }
     }
+
+
+
     return [fetching, isLoading, error]
 }
