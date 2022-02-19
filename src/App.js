@@ -16,6 +16,7 @@ import MyDiogram from './components/MyDiogram';
 import PostService from './API/PostService';
 import Loader from './components/UI/Loader/Loader';
 import { useFetching } from './hooks/useFetching';
+import starImg from './img/starFavicon.png'
 
 
 
@@ -67,6 +68,7 @@ function App() {
   return (
     <div className="App">
       <button onClick={fetchPosts}>GET POSTS</button>
+     
       <MyButton style = {{marginTop: "50px"}}onClick={ ()=> setModal (true) } >
         Создать пользователя
       </MyButton>
@@ -81,6 +83,10 @@ function App() {
         filter={filter}
         setFilter={setFilter}
       />
+    {/* В теге img не пишем прямой путь к картинке, а импортируем ее как модуль */}
+    <div style={{ display: 'flex', justifyContent: 'end'}}>
+      <img src={starImg} alt=" It's a star! :)" style={{width: '200px'}}/>
+</div>
       {postError && 
           <h1>Произошла ошибка ${postError}</h1>
         }

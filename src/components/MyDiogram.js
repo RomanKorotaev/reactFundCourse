@@ -91,7 +91,7 @@ let tmpArray = []
 
   <VictoryChart
     // добавляем свою кастомную тему диаграммы
-    theme={OwnTheme}
+    // theme={OwnTheme}
     // domainPadding will add space to each side of VictoryBar to
     // prevent it from overlapping the axis
     domainPadding={10}
