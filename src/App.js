@@ -16,12 +16,13 @@ import MyDiogram from './components/MyDiogram';
 import PostService from './API/PostService';
 import Loader from './components/UI/Loader/Loader';
 import { useFetching } from './hooks/useFetching';
-import starImg from './img/starFavicon.png'
-
+import starImg from './img/star.png'
+import {getPageCount, getPagesArray} from './utils/pages.js'
 
 
 
 function App() {
+  
     const [posts, setPosts] = useState ( [
         {id: 1, title: "JavaScript", body: "It's one of the most popular programming languages ​​now!" },
         {id: 2, title: "TypeScript", body: "I don't know any about this programming language." },
@@ -33,13 +34,24 @@ function App() {
 
     const [filter, setFilter] = useState({sort: '', query: ''});
     const [modal, setModal] = useState (false);
+    const [totalPages, setTotalPages] = useState (0);
+    const [limit, setLimit] = useState (10);
+    const [page, setPage] = useState (1);
     const sortedAndSearchedPosts = usePosts (posts, filter.sort, filter.query)
-    // const [isPostsLoading, setPostsLoading] = useState(false)
+
+    let pagesArray = getPagesArray(totalPages)
+   
+    console.log ("pagesArray = ", pagesArray )
+    
     const [fetchPosts, isPostsLoading, postError] = useFetching ( async ()=>{
-        const posts = await PostService.getAll()
-        setPosts (posts)
+        const response = await PostService.getAll(limit, page)
+        setPosts (response.data)
+        // console.log (" response.headers['x-total-count'] = ", response.headers['x-total-count'])
+        const totalCount = response.headers['x-total-count']
+        setTotalPages(getPageCount(totalCount, limit))
         })
 
+        console.log (" totalPages =  ", totalPages)
   
     useEffect ( ()=> {
       console.log ("USE EFFECT")
@@ -87,8 +99,9 @@ function App() {
         setFilter={setFilter}
       />
     {/* В теге img не пишем прямой путь к картинке, а импортируем ее как модуль */}
+    
     <div style={{ display: 'flex', justifyContent: 'end'}}>
-      <img src={starImg} alt=" It's a star! :)" style={{width: '100px'}}/>
+      <img src={starImg} alt=" It's a star! :)" className='starImg' />
 </div>
       {postError && 
           <h1>Произошла ошибка ${postError}</h1>
@@ -101,6 +114,27 @@ function App() {
         ?<div style={{display: 'flex', justifyContent: 'center', marginTop: '50px'}}><Loader/></div>
         : <PostList posts = {sortedAndSearchedPosts} remove={removePost} title = {"Список постов 1"} MyFunctionTest = {MyFunctionTest} />
       }
+
+      <div className='page__wrapper'>
+
+        {/* Массив с кнопками пагинации */}
+      {/* {pagesArray.map(p=>
+        <MyButton className="page">{p}</MyButton>
+        )} */}
+
+        {pagesArray.map(p=>
+          <span 
+            key = {p}
+            className={page===p ? 'page page__current' : 'page' }
+            onClick = {()=>setPage(p)}
+          >
+            {p}
+          </span>
+        )}
+
+      </div>
+
+      
    
 
 
