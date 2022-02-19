@@ -1,0 +1,13 @@
+.myBtn {
+  font-style: italic;
+  font-weight: 900;
+  padding: 5px 15px;
+  color: blue;
+  font-size: 14px;
+  background: transparent;
+  border: 2px dotted blue;
+  border-radius: 5px;
+  /* border-radius: 10px 10px 0px 0px; */
+  cursor: pointer;
+  color: #2f00ff;
+}
